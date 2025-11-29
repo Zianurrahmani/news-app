@@ -5,7 +5,6 @@ import 'router/routes.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   AppRouter.setupRouter();
-
   runApp(NewsApp());
 }
 
