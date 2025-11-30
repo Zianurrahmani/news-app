@@ -18,6 +18,18 @@ class AppRouter {
       transitionType: TransitionType.fadeIn,
     );
 
+    router.define(
+      Routes.category,
+      handler: categoryHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+
+    router.define(
+      Routes.categoryResult,
+      handler: categoryResultHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+
     // router.define(
     //   Routes.detail,
     //   handler: detailHandler,

@@ -40,7 +40,6 @@ class NewsService {
 
       throw Exception("Network error: ${e.message}");
     } catch (e) {
-      // Fallback for any other exception
       throw Exception("Unexpected error: $e");
     }
   }
@@ -60,6 +59,24 @@ class NewsService {
       print(e);
       print(s);
       throw Exception("Failed to search news");
+    }
+  }
+
+  Future<List<ArticleModel>> getNewsByCategory(String category) async {
+    try {
+      final response = await _dio.get(
+        "$_baseUrl/top-headlines",
+        queryParameters: {
+          "country": "us",
+          "category": category,
+          "apiKey": _apiKey,
+        },
+      );
+
+      final List items = response.data["articles"] ?? [];
+      return items.map((e) => ArticleModel.fromJson(e)).toList();
+    } catch (e) {
+      throw Exception("Failed to fetch category news");
     }
   }
 }

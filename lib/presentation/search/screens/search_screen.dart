@@ -30,9 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 border: OutlineInputBorder(),
               ),
             ),
-
             const SizedBox(height: 12),
-
             DropdownButtonFormField<String>(
               value: selectedCategory,
               decoration: const InputDecoration(
@@ -46,9 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
               onChanged: (v) => setState(() => selectedCategory = v!),
             ),
-
             const SizedBox(height: 12),
-
             ElevatedButton(
               onPressed: () {
                 context.read<SearchBloc>().add(
@@ -60,10 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
               },
               child: const Text("Search"),
             ),
-
             const SizedBox(height: 12),
-
-            // 📰 Results
             Expanded(
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
