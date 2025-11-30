@@ -15,6 +15,10 @@ class HomeState {
     required this.hasMore,
   });
 
+  int get itemCount => hasMore ? visibleArticles.length + 1 : visibleArticles.length;
+
+  bool isLoaderIndex(int index) => hasMore && index == visibleArticles.length;
+
   factory HomeState.initial() {
     return HomeState(
       allArticles: [],

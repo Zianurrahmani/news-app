@@ -15,7 +15,7 @@ class NewsApp extends StatelessWidget {
       title: "News App",
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.router.generator,
-      initialRoute: Routes.home,
+      initialRoute: Routes.search,
     );
   }
 }

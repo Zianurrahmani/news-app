@@ -16,8 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    context.read<HomeCubit>().loadNews();
-
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
         context.read<HomeCubit>().loadMore();
@@ -44,13 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: () => context.read<HomeCubit>().refresh(),
             child: ListView.builder(
               controller: _scrollController,
-              itemCount: state.hasMore ? state.visibleArticles.length + 1 : state.visibleArticles.length,
+              itemCount: state.itemCount,
               itemBuilder: (context, index) {
-                if (index == state.visibleArticles.length) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
+                if (state.isLoaderIndex(index)) {
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 final article = state.visibleArticles[index];

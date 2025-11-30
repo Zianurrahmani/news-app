@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/presentation/home/bloc/home_bloc.dart';
 
 import 'package:news_app/presentation/home/screens/home_screen.dart';
+import 'package:news_app/presentation/search/bloc/search_bloc.dart';
+import 'package:news_app/presentation/search/screens/search_screen.dart';
 import 'package:news_app/services/news_service.dart';
 
 Handler homeHandler = Handler(
@@ -10,6 +12,15 @@ Handler homeHandler = Handler(
     return BlocProvider(
       create: (_) => HomeCubit(NewsService())..loadNews(),
       child: HomeScreen(),
+    );
+  },
+);
+
+var searchHandler = Handler(
+  handlerFunc: (context, params) {
+    return BlocProvider(
+      create: (_) => SearchBloc(NewsService()),
+      child: SearchScreen(),
     );
   },
 );

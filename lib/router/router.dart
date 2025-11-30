@@ -12,6 +12,12 @@ class AppRouter {
       transitionType: TransitionType.fadeIn,
     );
 
+    router.define(
+      Routes.search,
+      handler: searchHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+
     // router.define(
     //   Routes.detail,
     //   handler: detailHandler,

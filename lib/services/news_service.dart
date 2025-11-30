@@ -3,14 +3,14 @@ import 'package:news_app/presentation/home/models/article_model.dart';
 
 class NewsService {
   static const String _apiKey = "83844eb82f894e548680da004670decb";
-  static const String _baseUrl = "https://newsapi.org/v2/top-headlines";
+  static const String _baseUrl = "https://newsapi.org/v2";
 
   final Dio _dio = Dio();
 
   Future<List<ArticleModel>> fetchTopHeadlinesUSA() async {
     try {
       final response = await _dio.get(
-        _baseUrl,
+        "$_baseUrl/top-headlines",
         queryParameters: {
           'country': 'us',
           'apiKey': _apiKey,
@@ -42,6 +42,24 @@ class NewsService {
     } catch (e) {
       // Fallback for any other exception
       throw Exception("Unexpected error: $e");
+    }
+  }
+
+  Future<List<ArticleModel>> searchNews(String keyword) async {
+    try {
+      final response = await _dio.get(
+        "$_baseUrl/everything",
+        queryParameters: {
+          "q": keyword,
+          "apiKey": _apiKey,
+        },
+      );
+
+      return (response.data["articles"] as List).map((e) => ArticleModel.fromJson(e)).toList();
+    } catch (e, s) {
+      print(e);
+      print(s);
+      throw Exception("Failed to search news");
     }
   }
 }
