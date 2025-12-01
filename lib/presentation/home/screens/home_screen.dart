@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/presentation/home/bloc/home_bloc.dart';
 import 'package:news_app/presentation/home/bloc/home_state.dart';
 import 'package:news_app/presentation/home/widgets/home_card.dart';
+import 'package:news_app/services/news_service.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 50) {
-        context.read<HomeCubit>().loadMore();
+        context.read<HomeBloc>().loadMore();
       }
     });
 
@@ -32,29 +33,32 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Top Headlines (US)"),
         centerTitle: true,
       ),
-      body: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: BlocProvider(
+        create: (context) => HomeBloc(NewsService())..loadNews(),
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          return RefreshIndicator(
-            onRefresh: () => context.read<HomeCubit>().refresh(),
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: state.itemCount,
-              itemBuilder: (context, index) {
-                if (state.isLoaderIndex(index)) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+            return RefreshIndicator(
+              onRefresh: () => context.read<HomeBloc>().refresh(),
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: state.itemCount,
+                itemBuilder: (context, index) {
+                  if (state.isLoaderIndex(index)) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                final article = state.visibleArticles[index];
+                  final article = state.visibleArticles[index];
 
-                return HomeCard(article: article);
-              },
-            ),
-          );
-        },
+                  return HomeCard(article: article);
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

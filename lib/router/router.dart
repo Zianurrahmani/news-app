@@ -7,6 +7,12 @@ class AppRouter {
 
   static void setupRouter() {
     router.define(
+      Routes.main,
+      handler: mainHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+
+    router.define(
       Routes.home,
       handler: homeHandler,
       transitionType: TransitionType.fadeIn,
@@ -27,6 +33,18 @@ class AppRouter {
     router.define(
       Routes.categoryResult,
       handler: categoryResultHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+
+    router.define(
+      Routes.profle,
+      handler: profileHandler,
+      transitionType: TransitionType.fadeIn,
+    );
+
+    router.define(
+      Routes.notif,
+      handler: notifHandler,
       transitionType: TransitionType.fadeIn,
     );
 

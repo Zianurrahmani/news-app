@@ -2,10 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/presentation/home/bloc/home_state.dart';
 import 'package:news_app/services/news_service.dart';
 
-class HomeCubit extends Cubit<HomeState> {
+class HomeBloc extends Cubit<HomeState> {
   final NewsService _service;
 
-  HomeCubit(this._service) : super(HomeState.initial());
+  HomeBloc(this._service) : super(HomeState.initial());
 
   static const int pageSize = 5;
 
